@@ -14,6 +14,10 @@ const core = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
+    },
   },
   plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })],
 };
@@ -52,4 +56,5 @@ const prod = {
   },
 };
 
-module.exports = (env) => env?.development ? merge(core, babel, dev) : merge(core, babel, prod);
+module.exports = (env) =>
+  env?.development ? merge(core, babel, dev) : merge(core, babel, prod);
