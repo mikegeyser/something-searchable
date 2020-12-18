@@ -51,7 +51,7 @@ const dev = {
 const prod = {
   mode: 'production',
   output: {
-    publicPath: 'build/',
+    publicPath: '/',
     path: path.resolve(__dirname, 'build/'),
   },
 };
