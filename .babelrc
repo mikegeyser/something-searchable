@@ -1,4 +1,12 @@
 {
-  "presets": ["@babel/preset-env"],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "targets": "> 2%, not dead"
+      }
+    ]
+  ],
   "plugins": [["@babel/transform-react-jsx", { "pragma": "h" }]]
 }
