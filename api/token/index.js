@@ -14,8 +14,10 @@ module.exports = async function (context, req) {
     // Get the secrets out of the environment variables.
     const { private_key, installation } = process.env;
 
+    const fixed_private_key = private_key.replace(/\\n/g, '\n')
+
     // Sign the app token using the private key.
-    const jwtToken = jwt.sign(payload, private_key, { algorithm: 'RS256' });
+    const jwtToken = jwt.sign(payload, fixed_private_key, { algorithm: 'RS256' });
 
     // Get an access token using the app token and my installation.
     const api = `https://api.github.com/app/installations/${installation}/access_tokens`;
