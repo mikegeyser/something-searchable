@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const api = 'https://api.github.com/search/users';
-const perPage = 10;
+import { search } from '../services';
 
 const { actions, reducer } = createSlice({
   name: 'search',
@@ -20,23 +18,7 @@ const { actions, reducer } = createSlice({
 export const { setQuery, searchResultsReceived } = actions;
 export default reducer;
 
-let token;
-const getHeaders = async () => {
-  if (!token) {
-    console.log(process.env.NODE_ENV);
-    const request = '/api/token';
-    const response = await fetch(request, { method: 'post' });
-    token = await response.text();
-  }
-
-  return { Authorization: `token ${token}` };
-};
-
 export const performSearch = (query, page) => async (dispatch) => {
-  const request = `${api}?q=${query}&page=${page}&per_page=${perPage}`;
-  const headers = await getHeaders();
-  const response = await fetch(request, { headers });
-  const results = await response.json();
-
+  const results = await search(query, page);
   dispatch(searchResultsReceived(results));
 };
