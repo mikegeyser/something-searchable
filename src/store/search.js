@@ -20,9 +20,22 @@ const { actions, reducer } = createSlice({
 export const { setQuery, searchResultsReceived } = actions;
 export default reducer;
 
+let token;
+const getHeaders = async () => {
+  if (!token) {
+    console.log(process.env.NODE_ENV);
+    const request = '/api/token';
+    const response = await fetch(request, { method: 'post' });
+    token = await response.text();
+  }
+
+  return { Authorization: `token ${token}` };
+};
+
 export const performSearch = (query, page) => async (dispatch) => {
   const request = `${api}?q=${query}&page=${page}&per_page=${perPage}`;
-  const response = await fetch(request);
+  const headers = await getHeaders();
+  const response = await fetch(request, { headers });
   const results = await response.json();
 
   dispatch(searchResultsReceived(results));

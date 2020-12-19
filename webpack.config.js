@@ -46,6 +46,11 @@ const dev = {
     publicPath: '/',
     path: path.resolve(__dirname, '/'),
   },
+  devServer: {
+    proxy: {
+      '/api/token': 'http://localhost:7071',
+    },
+  },
 };
 
 const prod = {
