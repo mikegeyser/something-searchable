@@ -5,14 +5,22 @@ const perPage = 10;
 
 const { actions, reducer } = createSlice({
   name: 'search',
-  initialState: { query: '', results: [], total: 0, page: 1 },
+  initialState: {
+    query: '',
+    results: [],
+    actualTotal: 0,
+    total: 0,
+    page: 1,
+    numberOfPages: 0,
+  },
   reducers: {
     setQuery(state, { payload }) {
       state.query = payload;
     },
     searchResultsReceived(state, { payload: { items, total_count } }) {
       state.results = items;
-      state.total = Math.min(total_count, 1000); // Only the first 1000 results are available via the api, with my account level.
+      state.actualTotal = total_count;
+      state.total = Math.min(state.actualTotal, 1000); // Only the first 1000 results are available via the api, with my account level.
       state.numberOfPages = Math.ceil(state.total / perPage);
     },
     pageChanged(state, { payload: page }) {

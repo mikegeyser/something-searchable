@@ -10,7 +10,7 @@ export const Pagination = () => {
 
   const start = Math.max(1, page - 2);
   const end = Math.min(numberOfPages, page + 2);
-  const numberofPagesToRender = Math.max(end - start + 1, 5);
+  const numberofPagesToRender = Math.min(Math.max(end - start + 1, 5), numberOfPages);
 
   const renderButton = (i) => {
     const className = i === page ? 'current' : '';
