@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "rm -rf build/* && webpack",
     "start": "concurrently \"npm run start:webpack\" \"npm run start:functions\"",
     "start:webpack": "webpack serve --env development --progress --profile --watch --content-base src/",
     "start:functions": "cd api && func host start"
@@ -30,8 +30,10 @@
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",
     "concurrently": "^5.3.0",
-    "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^1.1.5",
     "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.3.3",
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",

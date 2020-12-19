@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { useSelector } from 'react-redux';
+import { Pagination } from './pagination';
 import { UserResult } from './user-result';
 
 export const Results = () => {
@@ -16,7 +17,9 @@ export const Results = () => {
   return (
     <div>
       {heading}
+      <Pagination />
       {results.map(user => <UserResult user={user} />)}
+      <Pagination />
     </div>
   );
 };

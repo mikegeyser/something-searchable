@@ -10,8 +10,9 @@ export const Pagination = () => {
 
   const start = Math.max(1, page - 2);
   const end = Math.min(numberOfPages, page + 2);
-  const numberofPagesToRender = Math.min(Math.max(end - start + 1, 5), numberOfPages);
+  const numberofPagesToRender = Math.min(Math.max(end - start + 1, 5), numberOfPages - start + 1);
 
+  console.log({page, numberOfPages, numberofPagesToRender});
   const renderButton = (i) => {
     const className = i === page ? 'current' : '';
     return (
@@ -35,13 +36,16 @@ export const Pagination = () => {
   const previous = () => goToPage(Math.max(page - 1, 0));
   const next = () => goToPage(Math.min(page + 1, numberOfPages));
 
+  const disablePrevious = page === 1;
+  const disableNext = page === numberOfPages;
+
   return (
-    <div>
-      <button type='button' onClick={previous}>
+    <div className="pagination">
+      <button type='button' onClick={previous} disabled={disablePrevious}>
         &lt;
       </button>
       {pagination}
-      <button type='button' onClick={next}>
+      <button type='button' onClick={next} disabled={disableNext}>
         &gt;
       </button>
     </div>

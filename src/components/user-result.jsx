@@ -14,20 +14,16 @@ export const UserResult = ({ user }) => {
   } = user;
 
   return (
-    <a href={html_url} target='__blank'>
-      <img
-        src={avatar_url}
-        alt={`Profile picture for ${login}.`}
-        width={30}
-        height={30}></img>
-      <span>{name}</span>
-      <span>{login}</span>
-      <div>{bio}</div>
-      <div>
-        <span>{followers} followers</span>
-        <span>{public_repos} public repos</span>
+    <div className='user'>
+      <img src={avatar_url} alt={`Profile picture for ${login}.`}></img>
+      <a href={html_url} target='__blank' className='name'>
+        {name} - @{login}
+      </a>
+      <div className='bio'>{bio}</div>
+      <div className='numbers'>
+        {followers} followers, {public_repos} public repos.
       </div>
-      <div>Joined on {created_at}</div>
-    </a>
+      <div className='joined'>Joined on {created_at}</div>
+    </div>
   );
 };

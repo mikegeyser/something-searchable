@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const srcPath = 'src/';
 
@@ -19,7 +21,9 @@ const core = {
       'react-dom': 'preact/compat',
     },
   },
-  plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+  ],
 };
 
 const babel = {
@@ -38,6 +42,20 @@ const babel = {
       },
     ],
   },
+};
+
+const css = {
+  module: {
+    rules: [
+      { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
+    new CssMinimizerPlugin(),
+  ],
 };
 
 const dev = {
@@ -61,5 +79,7 @@ const prod = {
   },
 };
 
-module.exports = (env) =>
-  env?.development ? merge(core, babel, dev) : merge(core, babel, prod);
+module.exports = (env) => {
+  const shared = merge(core, babel, css);
+  return env?.development ? merge(shared, dev) : merge(shared, prod);
+};
