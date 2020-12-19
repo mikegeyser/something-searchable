@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { search } from '../services';
+import { search, user } from '../services';
 
 const perPage = 10;
 
@@ -26,18 +26,30 @@ const { actions, reducer } = createSlice({
     pageChanged(state, { payload: page }) {
       state.page = page;
     },
+    userDetailsReceived(state, { payload: userDetails }) {
+      const result = state.results.find(
+        ({ login }) => login === userDetails.login
+      );
+      Object.assign(result, userDetails);
+    },
   },
 });
 
 export default reducer;
 
-export const { setQuery, searchResultsReceived, pageChanged } = actions;
+export const {
+  setQuery,
+  searchResultsReceived,
+  pageChanged,
+  userDetailsReceived,
+} = actions;
 
 export const performSearch = (query) => async (dispatch) => {
   const page = 1; // Always start at the beginning again.
   const results = await search(query, page, perPage);
   dispatch(pageChanged(page));
   dispatch(searchResultsReceived(results));
+  dispatch(fetchUserDetailsForResults(results));
 };
 
 export const performPagination = (page) => async (dispatch, getState) => {
@@ -45,4 +57,14 @@ export const performPagination = (page) => async (dispatch, getState) => {
   const results = await search(query, page, perPage);
   dispatch(pageChanged(page));
   dispatch(searchResultsReceived(results));
+  dispatch(fetchUserDetailsForResults(results));
+};
+
+const fetchUserDetailsForResults = (results) => (dispatch) => {
+  results.items.map(({ login }) => dispatch(fetchUserDetails(login)));
+};
+
+const fetchUserDetails = (login) => async (dispatch) => {
+  const userDetails = await user(login);
+  dispatch(userDetailsReceived(userDetails));
 };

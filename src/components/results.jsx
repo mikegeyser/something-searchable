@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { useSelector } from 'react-redux';
+import { UserResult } from './user-result';
 
 export const Results = () => {
   const { actualTotal, total, results } = useSelector(
@@ -15,16 +16,7 @@ export const Results = () => {
   return (
     <div>
       {heading}
-      {results.map(({ login, avatar_url }) => (
-        <div>
-          <img
-            src={avatar_url}
-            alt={`Profile picture for ${login}.`}
-            width={30}
-            height={30}></img>
-          <span>{login}</span>
-        </div>
-      ))}
+      {results.map(user => <UserResult user={user} />)}
     </div>
   );
 };
