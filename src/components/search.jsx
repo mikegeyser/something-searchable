@@ -8,10 +8,20 @@ export const Search = () => {
 
   const onChange = (e) => dispatch(setQuery(e.target.value));
   const onClick = () => dispatch(performSearch(query, page));
+  const onKeyPress = ({ key }) => {
+    if (key === 'Enter') {
+      onClick();
+    }
+  };
 
   return (
     <div>
-      <input type='text' value={query} onChange={onChange}></input>
+      <input
+        type='text'
+        autoFocus={true}
+        value={query}
+        onChange={onChange}
+        onKeyPress={onKeyPress}></input>
       <button type='button' onClick={onClick}>
         Search
       </button>
