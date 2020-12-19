@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import { Header, Results, Search } from './components';
+import { Header, Pagination, Results, Search } from './components';
 import { store } from './store';
 import { Provider } from 'react-redux';
 
@@ -8,6 +8,7 @@ const App = (
     <Header />
     <Search />
     <Results />
+    <Pagination />
   </Provider>
 );
 
