@@ -4,6 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 const srcPath = 'src/';
 
@@ -21,9 +22,7 @@ const core = {
       'react-dom': 'preact/compat',
     },
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: 'src/index.html' }),
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })],
 };
 
 const babel = {
@@ -58,6 +57,14 @@ const css = {
   ],
 };
 
+const workbox = {
+  plugins: [
+    new InjectManifest({
+      swSrc: path.resolve(srcPath, 'sw.js'),
+    }),
+  ],
+};
+
 const dev = {
   mode: 'development',
   output: {
@@ -80,6 +87,6 @@ const prod = {
 };
 
 module.exports = (env) => {
-  const shared = merge(core, babel, css);
+  const shared = merge(core, babel, css, workbox);
   return env?.development ? merge(shared, dev) : merge(shared, prod);
 };

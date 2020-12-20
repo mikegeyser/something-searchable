@@ -30,7 +30,8 @@ const { actions, reducer } = createSlice({
       const result = state.results.find(
         ({ login }) => login === userDetails.login
       );
-      Object.assign(result, userDetails);
+
+      if (result) Object.assign(result, userDetails);
     },
   },
 });

@@ -22,7 +22,12 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "preact": "^10.5.7",
-    "react-redux": "^7.2.2"
+    "react-redux": "^7.2.2",
+    "workbox-cacheable-response": "^6.0.2",
+    "workbox-core": "^6.0.2",
+    "workbox-expiration": "^6.0.2",
+    "workbox-routing": "^6.0.2",
+    "workbox-strategies": "^6.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -37,6 +42,7 @@
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^5.7.1"
+    "webpack-merge": "^5.7.1",
+    "workbox-webpack-plugin": "^6.0.2"
   }
 }
